@@ -1,6 +1,6 @@
 # mandelbrot-go
 
-An excuse to play around with Go in the form of a Mandelbrot plotter.
+An excuse to learn Go in the form of a simple Mandelbrot plotter.
 
 ## Usage
 
