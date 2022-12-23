@@ -1,5 +1,7 @@
 # mandelbrot-go
 
+[![Go](https://github.com/ebeeton/mandelbrot-go/actions/workflows/go.yml/badge.svg)](https://github.com/ebeeton/mandelbrot-go/actions/workflows/go.yml)
+
 An excuse to learn Go in the form of a simple Mandelbrot plotter.
 
 ## Usage
