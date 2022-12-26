@@ -67,9 +67,9 @@ func plotImage(p *params) *image.RGBA {
 
 	img := image.NewRGBA(image.Rect(0, 0, p.width, p.height))
 
-	var aspectRatio = float64(p.height) / float64(p.width)
-	var minI = aspectRatio * min
-	var maxI = aspectRatio * max
+	aspectRatio := float64(p.height) / float64(p.width)
+	minI := aspectRatio * min
+	maxI := aspectRatio * max
 
 	for y := 0; y < p.height; y++ {
 		i := linearScale(float64(y), 0, float64(p.height), minI, maxI)
