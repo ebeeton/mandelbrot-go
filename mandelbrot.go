@@ -100,14 +100,14 @@ func writeImage(w http.ResponseWriter, img *image.RGBA) {
 	buf := new(bytes.Buffer)
 
 	if err := png.Encode(buf, img); err != nil {
-		log.Println("Failed to encode image.")
+		log.Printf("Failed to encode image. %s", err)
 		return
 	}
 
 	w.Header().Set("Content-type", "image/png")
 	w.Header().Set("Content-length", strconv.Itoa(buf.Len()))
 	if _, err := w.Write(buf.Bytes()); err != nil {
-		log.Println("Failed to write image.")
+		log.Printf("Failed to write image. %s", err)
 	}
 }
 
