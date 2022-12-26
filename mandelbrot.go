@@ -75,9 +75,9 @@ func plotImage(p *params) *image.RGBA {
 		i := linearScale(float64(y), 0, float64(p.height), minI, maxI)
 		for x := 0; x < p.width; x++ {
 			r := linearScale(float64(x), 0, float64(p.width), min, max)
-			isInSet, iter := isInMandelbrotSet(complex(r, i), p.maxIterations)
+
 			var gray uint8
-			if isInSet {
+			if isInSet, iter := isInMandelbrotSet(complex(r, i), p.maxIterations); isInSet {
 				// Leave points in the set black.
 				gray = 0
 			} else {
