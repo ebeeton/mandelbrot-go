@@ -26,12 +26,12 @@ func mandelbrotHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type params struct {
-	width         int
-	height        int
+	width,
+	height,
 	maxIterations int
 }
 
-func newParams(width int, height int, iterations int) *params {
+func newParams(width, height, iterations int) *params {
 	p := params{width: width, height: height, maxIterations: iterations}
 	return &p
 }
@@ -124,6 +124,6 @@ func isInMandelbrotSet(c complex128, maxIterations int) (bool, int) {
 	return true, maxIterations
 }
 
-func linearScale(val float64, minScaleFrom float64, maxScaleFrom float64, minScaleTo float64, maxScaleTo float64) float64 {
+func linearScale(val, minScaleFrom, maxScaleFrom, minScaleTo, maxScaleTo float64) float64 {
 	return (val-minScaleFrom)/(maxScaleFrom-minScaleFrom)*(maxScaleTo-minScaleTo) + minScaleTo
 }
