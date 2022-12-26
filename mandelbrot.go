@@ -12,17 +12,14 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", mandelbrotHandler)
-	e := http.ListenAndServe(":3000", nil)
-	if e != nil {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		p := getQueryParams(r)
+		img := plotImage(p)
+		writeImage(w, img)
+	})
+	if e := http.ListenAndServe(":3000", nil); e != nil {
 		log.Fatal(e)
 	}
-}
-
-func mandelbrotHandler(w http.ResponseWriter, r *http.Request) {
-	p := getQueryParams(r)
-	img := plotImage(p)
-	writeImage(w, img)
 }
 
 type params struct {
