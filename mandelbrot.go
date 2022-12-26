@@ -81,14 +81,14 @@ func plotImage(p *params) *image.RGBA {
 				// Leave points in the set black.
 				gray = 0
 			} else {
-				gray = uint8(float64(iter) / float64(p.maxIterations) * 255)
+				gray = uint8(float64(iter) / float64(p.maxIterations) * math.MaxUint8)
 			}
 
 			img.Set(x, y, color.NRGBA{
 				R: gray,
 				G: gray,
 				B: gray,
-				A: 255,
+				A: uint8(color.Opaque.A),
 			})
 		}
 	}
