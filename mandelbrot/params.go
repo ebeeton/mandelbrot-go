@@ -1,3 +1,5 @@
+// Package mandelbrot provides functionality to plot images and write them to
+// HTTP responses.
 package mandelbrot
 
 import (
@@ -16,6 +18,7 @@ func newParams(width, height, iterations int) *params {
 	return &p
 }
 
+// GetQueryParams gets plotting parameters from an http.Request query string.
 func GetQueryParams(r *http.Request) *params {
 	const (
 		defaultWidth      int = 1024

@@ -1,3 +1,5 @@
+// Package mandelbrot provides functionality to plot images and write them to
+// HTTP responses.
 package mandelbrot
 
 import (
@@ -11,6 +13,8 @@ import (
 	"strconv"
 )
 
+// PlotImage plots a Mandelbrot image given a set of parameters and returns
+// an image.RGBA.
 func PlotImage(p *params) *image.RGBA {
 	const (
 		min float64 = -2.0
@@ -48,6 +52,7 @@ func PlotImage(p *params) *image.RGBA {
 	return img
 }
 
+// WriteImage writes an image.RGBA to an http.ResponseWriter.
 func WriteImage(w http.ResponseWriter, img *image.RGBA) {
 	buf := new(bytes.Buffer)
 
