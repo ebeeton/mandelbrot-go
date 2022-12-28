@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestLinearScaleTableDriven(t *testing.T) {
-	// https://stackoverflow.com/a/47969546
+func TestLinearScale(t *testing.T) {
+	// "Close enough" from https://stackoverflow.com/a/47969546
 	const delta = 1e-10
 	var tests = []struct {
 		val, minScaleFrom, maxScaleFrom, minScaleTo, maxScaleTo, want float64
