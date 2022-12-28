@@ -3,7 +3,7 @@
 package mandelbrot
 
 import (
-	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -18,23 +18,23 @@ func newParams(width, height, iterations int) *params {
 	return &p
 }
 
-// GetQueryParams gets plotting parameters from an http.Request query string.
-func GetQueryParams(r *http.Request) *params {
+// GetQueryParams gets plotting parameters from a map of query parameters.
+func GetQueryParams(q url.Values) *params {
 	const (
 		defaultWidth      int = 1024
 		defaultHeight     int = 768
 		defaultIterations int = 512
 	)
 
-	width, err := strconv.Atoi(r.URL.Query().Get("width"))
+	width, err := strconv.Atoi(q.Get("width"))
 	if err != nil {
 		width = defaultWidth
 	}
-	height, err := strconv.Atoi(r.URL.Query().Get("height"))
+	height, err := strconv.Atoi(q.Get("height"))
 	if err != nil {
 		height = defaultHeight
 	}
-	iterations, err := strconv.Atoi(r.URL.Query().Get("iterations"))
+	iterations, err := strconv.Atoi(q.Get("iterations"))
 	if err != nil {
 		iterations = defaultIterations
 	}
