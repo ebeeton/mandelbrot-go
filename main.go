@@ -9,7 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		p := mandelbrot.GetQueryParams(r.URL.Query())
+		p := mandelbrot.GetParams(r.URL.Query())
 		img := mandelbrot.PlotImage(p)
 		mandelbrot.WriteImage(w, img)
 	})

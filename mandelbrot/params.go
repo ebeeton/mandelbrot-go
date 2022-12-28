@@ -18,8 +18,8 @@ func newParams(width, height, iterations int) *params {
 	return &p
 }
 
-// GetQueryParams gets plotting parameters from a map of query parameters.
-func GetQueryParams(q url.Values) *params {
+// GetParams gets plotting parameters from a map of query parameters.
+func GetParams(q url.Values) *params {
 	const (
 		defaultWidth      int = 1024
 		defaultHeight     int = 768
