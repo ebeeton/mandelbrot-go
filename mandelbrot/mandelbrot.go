@@ -7,7 +7,6 @@ import (
 	"image"
 	"image/color"
 	"image/png"
-	"log"
 	"math"
 	"net/http"
 	"strconv"
@@ -53,19 +52,20 @@ func PlotImage(p *params) *image.RGBA {
 }
 
 // WriteImage writes an image.RGBA to an http.ResponseWriter.
-func WriteImage(w http.ResponseWriter, img *image.RGBA) {
+func WriteImage(w http.ResponseWriter, img *image.RGBA) error {
 	buf := new(bytes.Buffer)
 
 	if err := png.Encode(buf, img); err != nil {
-		log.Printf("Failed to encode image. %s", err)
-		return
+		return err
 	}
 
 	w.Header().Set("Content-type", "image/png")
 	w.Header().Set("Content-length", strconv.Itoa(buf.Len()))
 	if _, err := w.Write(buf.Bytes()); err != nil {
-		log.Printf("Failed to write image. %s", err)
+		return err
 	}
+
+	return nil
 }
 
 func isInMandelbrotSet(c complex128, maxIterations int) (bool, int) {
