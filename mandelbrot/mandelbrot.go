@@ -10,6 +10,7 @@ import (
 	"math"
 	"net/http"
 	"strconv"
+	"sync"
 )
 
 // PlotImage plots a Mandelbrot image given a set of parameters and returns
@@ -26,28 +27,36 @@ func PlotImage(p *params) *image.RGBA {
 	minI := aspectRatio * min
 	maxI := aspectRatio * max
 
+	var wg sync.WaitGroup
+
 	for y := 0; y < p.height; y++ {
 		i := linearScale(float64(y), 0, float64(p.height), minI, maxI)
-		for x := 0; x < p.width; x++ {
-			r := linearScale(float64(x), 0, float64(p.width), min, max)
+		// Plot each scan line concurrently.
+		wg.Add(1)
+		go func(y int) {
+			defer wg.Done()
+			for x := 0; x < p.width; x++ {
+				r := linearScale(float64(x), 0, float64(p.width), min, max)
 
-			var gray uint8
-			if isInSet, iter := isInMandelbrotSet(complex(r, i), p.maxIterations); isInSet {
-				// Leave points in the set black.
-				gray = 0
-			} else {
-				gray = uint8(float64(iter) / float64(p.maxIterations) * math.MaxUint8)
+				var gray uint8
+				if isInSet, iter := isInMandelbrotSet(complex(r, i), p.maxIterations); isInSet {
+					// Leave points in the set black.
+					gray = 0
+				} else {
+					gray = uint8(float64(iter) / float64(p.maxIterations) * math.MaxUint8)
+				}
+
+				img.Set(x, y, color.NRGBA{
+					R: gray,
+					G: gray,
+					B: gray,
+					A: uint8(color.Opaque.A),
+				})
 			}
-
-			img.Set(x, y, color.NRGBA{
-				R: gray,
-				G: gray,
-				B: gray,
-				A: uint8(color.Opaque.A),
-			})
-		}
+		}(y)
 	}
 
+	wg.Wait()
 	return img
 }
 
