@@ -28,3 +28,28 @@ func TestLinearScale(t *testing.T) {
 		})
 	}
 }
+
+func TestIsInMandelbrotSet(t *testing.T) {
+	var tests = []struct {
+		c             complex128
+		maxIterations int
+		isInSet       bool
+		iterations    int
+	}{
+		{complex(0, 0), 100, true, 100},
+		{complex(1, 1), 100, false, 1},
+	}
+
+	for _, tt := range tests {
+		testname := fmt.Sprintf("%v,%d,%t,%d", tt.c, tt.maxIterations, tt.isInSet, tt.iterations)
+		t.Run(testname, func(t *testing.T) {
+			isInSet, iterations := isInMandelbrotSet(tt.c, tt.maxIterations)
+
+			if isInSet != tt.isInSet {
+				t.Errorf("Got %t, want %t", isInSet, tt.isInSet)
+			} else if iterations != tt.iterations {
+				t.Errorf("Got %d, want %d", iterations, tt.iterations)
+			}
+		})
+	}
+}
