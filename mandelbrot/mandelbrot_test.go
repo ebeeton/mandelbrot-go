@@ -1,7 +1,10 @@
 package mandelbrot
 
 import (
+	"bytes"
+	_ "embed"
 	"fmt"
+	"image/png"
 	"math"
 	"testing"
 )
@@ -51,5 +54,23 @@ func TestIsInMandelbrotSet(t *testing.T) {
 				t.Errorf("Got %d, want %d", iterations, tt.iterations)
 			}
 		})
+	}
+}
+
+//go:embed reference.png
+var reference []byte
+
+func TestIsReference(t *testing.T) {
+	p := params{width: 1024, height: 768, maxIterations: 512}
+	img := PlotImage(&p)
+	buf := new(bytes.Buffer)
+	if err := png.Encode(buf, img); err != nil {
+		t.Error(err)
+	}
+
+	got := buf.Bytes()
+
+	if !bytes.Equal(got, reference) {
+		t.Error("Reference image doesn't match plot output.")
 	}
 }
